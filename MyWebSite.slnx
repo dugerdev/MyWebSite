@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="MyWebSite.Core/MyWebSite.Core.csproj" />
+  <Project Path="MyWebSite.Data/MyWebSite.Data.csproj" />
+  <Project Path="MyWebSite.Web/MyWebSite.Web.csproj" />
+</Solution>
