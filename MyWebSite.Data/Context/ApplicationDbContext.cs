@@ -1,11 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using MyWebSite.Core.Entities;
 
 namespace MyWebSite.Data.Context;
 
-public class ApplicationDbContext : DbContext
+/// <summary>
+/// ApplicationDbContext: Veritabanı bağlantısı ve Entity konfigürasyonları
+/// IdentityDbContext: Identity yönetimi için gerekli tabloları da içerir
+/// </summary>
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
 {
-    public ApplicationDbContext(DbContextOptions options) : base(options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
 
