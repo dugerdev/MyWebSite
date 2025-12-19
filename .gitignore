@@ -108,3 +108,6 @@ artifacts/
 *~
 .DS_Store
 Thumbs.db
+
+## Template folders (sadece referans için, kullanılmıyor)
+startbootstrap-*/

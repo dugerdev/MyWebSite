@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Project>
+
+<!-- Projects Section-->
+<section class="py-5">
+    <div class="container px-5 mb-5">
+        <div class="text-center mb-5">
+            <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Projects</span></h1>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+                @if (Model != null && Model.Any())
+                {
+                    @foreach (var project in Model)
+                    {
+                        <!-- Project Card -->
+                        <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                            <div class="card-body p-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="p-5">
+                                        <h2 class="fw-bolder">
+                                            <a href="@Url.Action("Details", "Project", new{id = project.Id})" class="text-decoration-none text-dark">
+                                                @project.Title
+                                            </a>
+                                        </h2>
+                                        <p>@project.Description</p>
+                                        @if (!string.IsNullOrEmpty(project.Technologies))
+                                        {
+                                            <p class="text-muted"><strong>Technologies:</strong> @project.Technologies</p>
+                                        }
+                                        <div class="d-flex gap-2 mt-3">
+                                            <!-- View Details Button - HER ZAMAN GÖSTER -->
+                                            <a class="btn btn-outline-dark" href="@Url.Action("Details", "Project", new { id = project.Id })">
+                                                <i class="bi bi-eye"></i> View Details
+                                            </a>
+                                            
+                                            @if (!string.IsNullOrEmpty(project.GitHubUrl))
+                                            {
+                                                <a class="btn btn-outline-primary" href="@project.GitHubUrl" target="_blank">
+                                                    <i class="bi bi-github"></i> GitHub
+                                                </a>
+                                            }
+                                            @if (!string.IsNullOrEmpty(project.LiveUrl))
+                                            {
+                                                <a class="btn btn-primary" href="@project.LiveUrl" target="_blank">
+                                                    <i class="bi bi-box-arrow-up-right"></i> Live Demo
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(project.ImageUrl))
+                                    {
+                                        <img class="img-fluid" src="@project.ImageUrl" alt="@project.Title" style="max-width: 300px; max-height: 400px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="@project.Title" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p class="text-muted">No projects found.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Call to action section-->
+<section class="py-5 bg-gradient-primary-to-secondary text-white">
+    <div class="container px-5 my-5">
+        <div class="text-center">
+            <h2 class="display-4 fw-bolder mb-4">Let's build something together</h2>
+            <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" href="@Url.Action("Index", "Contact")">Contact me</a>
+        </div>
+    </div>
+</section>

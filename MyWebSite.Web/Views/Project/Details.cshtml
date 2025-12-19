@@ -1,0 +1,101 @@
+@model Project
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<!-- Project Details Section -->
+<section class="py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+                <!-- Back Button -->
+                <div class="mb-4">
+                    <a href="@Url.Action("Index", "Project")" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Back to Projects
+                    </a>
+                </div>
+
+                <!-- Project Details Card -->
+                <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <!-- Project Image (Left/Full Width on Mobile) -->
+                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                            {
+                                <div class="col-md-6 col-lg-5">
+                                    <img class="img-fluid w-100 h-100" src="@Model.ImageUrl" alt="@Model.Title" style="object-fit: cover; min-height: 400px;" />
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="col-md-6 col-lg-5">
+                                    <img class="img-fluid w-100 h-100" src="https://dummyimage.com/600x800/343a40/6c757d" alt="@Model.Title" style="object-fit: cover; min-height: 400px;" />
+                                </div>
+                            }
+
+                            <!-- Project Info (Right/Full Width on Mobile) -->
+                            <div class="col-md-6 col-lg-7">
+                                <div class="p-5">
+                                    <h1 class="display-5 fw-bolder mb-4">@Model.Title</h1>
+
+                                    <p class="lead mb-4">@Model.Description</p>
+
+                                    @if (!string.IsNullOrEmpty(Model.Technologies))
+                                    {
+                                        <div class="mb-4">
+                                            <h3 class="h5 fw-bolder mb-3"><span class="text-gradient d-inline">Technologies Used</span></h3>
+                                            <p class="text-muted">@Model.Technologies</p>
+                                        </div>
+                                    }
+
+                                    <!-- Action Buttons -->
+                                    <div class="d-flex gap-2 flex-wrap mt-4">
+                                        @if (!string.IsNullOrEmpty(Model.GitHubUrl))
+                                        {
+                                            <a class="btn btn-outline-primary btn-lg" href="@Model.GitHubUrl" target="_blank" rel="noopener noreferrer">
+                                                <i class="bi bi-github me-2"></i> View on GitHub
+                                            </a>
+                                        }
+                                        @if (!string.IsNullOrEmpty(Model.LiveUrl))
+                                        {
+                                            <a class="btn btn-primary btn-lg" href="@Model.LiveUrl" target="_blank" rel="noopener noreferrer">
+                                                <i class="bi bi-box-arrow-up-right me-2"></i> Live Demo
+                                            </a>
+                                        }
+                                    </div>
+
+                                    <!-- Project Metadata -->
+                                    <div class="mt-4 pt-4 border-top">
+                                        <div class="row text-muted small">
+                                            <div class="col-6">
+                                                <strong>Created:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")
+                                            </div>
+                                            @if (Model.UpdatedDate.HasValue)
+                                            {
+                                                <div class="col-6">
+                                                    <strong>Updated:</strong> @Model.UpdatedDate.Value.ToString("MMMM dd, yyyy")
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to action section -->
+<section class="py-5 bg-gradient-primary-to-secondary text-white">
+    <div class="container px-5 my-5">
+        <div class="text-center">
+            <h2 class="display-4 fw-bolder mb-4">Let's build something together</h2>
+            <a class="btn btn-outline-light btn-lg px-5 py-3 fs-6 fw-bolder" href="@Url.Action("Index", "Contact")">Contact me</a>
+        </div>
+    </div>
+</section>
+

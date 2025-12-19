@@ -24,7 +24,7 @@ public class AccountController : Controller
     {
         if(User.Identity?.IsAuthenticated == true)
         {
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Dashboard", new { area = "Admin" });
         }
 
         ViewData["ReturnUrl"] = returnUrl;
@@ -62,7 +62,7 @@ public class AccountController : Controller
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Index", "Dashboard", new {area = "Admin"});
         }
 
         if (result.IsLockedOut)

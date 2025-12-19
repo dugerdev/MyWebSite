@@ -1,0 +1,59 @@
+@model MyWebSite.Core.Entities.ContactMessage
+
+@{
+    ViewData["Title"] = "Message Details";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Message Details</h1>
+    <a href="@Url.Action("Index", "ContactMessages", new { area = "Admin" })" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">
+            @if (Model.IsRead)
+            {
+                <span class="badge badge-success">Read</span>
+            }
+            else
+            {
+                <span class="badge badge-warning">Unread</span>
+            }
+        </h6>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">From (Name)</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">
+                <a href="mailto:@Model.Email">@Model.Email</a>
+            </dd>
+
+            <dt class="col-sm-3">Subject</dt>
+            <dd class="col-sm-9">@Model.Subject</dd>
+
+            <dt class="col-sm-3">Message</dt>
+            <dd class="col-sm-9">
+                <div class="border p-3 bg-light" style="white-space: pre-wrap;">@Model.Message</div>
+            </dd>
+
+            <dt class="col-sm-3">Received At</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMMM yyyy HH:mm")</dd>
+        </dl>
+
+        <div class="mt-4">
+            <a href="mailto:@Model.Email" class="btn btn-primary">
+                <i class="fas fa-reply"></i> Reply
+            </a>
+            <a href="@Url.Action("Delete", "ContactMessages", new { area = "Admin", id = Model.Id })" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+</div>
+

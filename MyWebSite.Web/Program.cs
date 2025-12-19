@@ -1,14 +1,20 @@
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MyWebSite.Core.Entities;
 using MyWebSite.Core.Interfaces;
 using MyWebSite.Data.Context;
 using MyWebSite.Data.UnitOfWork;
+using MyWebSite.Web.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddFluentValidation(fv =>
+{
+    fv.RegisterValidatorsFromAssemblyContaining<ContactMessageValidator>();
+    fv.AutomaticValidationEnabled = true;
+});
 
 // ⭐ DbContext'i Dependency Injection Container'a ekliyoruz
 // AddDbContext: Entity Framework DbContext'i servis olarak kaydeder
@@ -78,6 +84,11 @@ app.UseAuthentication(); // Kimlik dogrulama (Login/Logout)
 app.UseAuthorization(); // Yetkilendirme (Roles, Policies)
 
 app.MapStaticAssets();
+
+// Area routing - Admin area için
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Dashboard}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

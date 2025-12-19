@@ -1,0 +1,90 @@
+@model MyWebSite.Core.Entities.Project
+
+@{
+    ViewData["Title"] = "Edit Project";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Edit Project</h1>
+    <a href="@Url.Action("Index", "Projects", new { area = "Admin" })" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Technologies" class="control-label"></label>
+                <input asp-for="Technologies" class="form-control" placeholder="e.g., C#, .NET, React, JavaScript" />
+                <span asp-validation-for="Technologies" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GitHubUrl" class="control-label"></label>
+                <input asp-for="GitHubUrl" class="form-control" type="url" />
+                <span asp-validation-for="GitHubUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LiveUrl" class="control-label"></label>
+                <input asp-for="LiveUrl" class="form-control" type="url" />
+                <span asp-validation-for="LiveUrl" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Current Image</label>
+                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                {
+                    <div class="mb-2">
+                        <img src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 200px; max-height: 150px; object-fit: cover;" class="img-thumbnail" />
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No image currently set</p>
+                }
+                <label class="control-label">Upload New Image (Optional)</label>
+                <input type="file" name="imageFile" class="form-control-file" accept="image/*" />
+                <small class="form-text text-muted">Leave empty to keep current image</small>
+            </div>
+
+            <div class="form-group">
+                <div class="form-check">
+                    <input asp-for="IsFeatured" class="form-check-input" type="checkbox" />
+                    <label asp-for="IsFeatured" class="form-check-label">
+                        Featured Project (Show on homepage)
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-save"></i> Update Project
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
