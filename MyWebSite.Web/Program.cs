@@ -69,10 +69,16 @@ using (var scope = app.Services.CreateScope())
     await seeder.SeedAsync();
 }
 
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
+// Configure the HTTP request pipeline.
+// ⭐ Exception Handler: Development'ta da Error sayfasını görmek için if bloğunun dışına çıkardık
+app.UseExceptionHandler("/Home/Error");
+
+
+app.UseStatusCodePagesWithRedirects("/Home/NotFound?statusCode={0}");
+
+if (!app.Environment.IsDevelopment())
+
     {
-        app.UseExceptionHandler("/Home/Error");
         // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
     }

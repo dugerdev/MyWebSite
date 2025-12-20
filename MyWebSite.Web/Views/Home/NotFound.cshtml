@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "The page you were looking for was not found.";
+    var statusCode = ViewBag.StatusCode as int? ?? 404;
+    var message = ViewBag.Message as string ?? "The page you were looking for was not found.";
+}
+
+<!-- 404 Not Found Section -->
+<section class="py-5 bg-light">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="text-center">
+                    <h1 class="display-1 fw-bolder text-danger">@statusCode</h1>
+                    <p class="lead fw-normal text-muted mb-4">@message</p>
+                    <p class="text-muted mb-4">Sorry, the page you are looking for does not exist or may have been moved.</p>
+
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="@Url.Action("Index", "Home")">
+                            <i class="bi bi-house-door"></i> Back to Home
+                        </a>
+                        <a class="btn btn-outline-secondary btn-lg px-4" href="javascript:history.back()">
+                            <i class="bi bi-arrow-left"></i> Go Back
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

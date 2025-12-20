@@ -98,6 +98,13 @@ public class ProjectsController : Controller
 
         if (ModelState.IsValid)
         {
+            // Tracked entity'yi al
+            var existingProject = await _unitOfWork.Projects.GetByIdAsync(id);
+            if (existingProject == null)
+            {
+                return NotFound();
+            }
+
             // Eğer yeni resim yüklendiyse
             if (imageFile != null && imageFile.Length > 0)
             {
@@ -109,8 +116,7 @@ public class ProjectsController : Controller
                 }
 
                 // Eski resmi sil (eğer varsa)
-                var existingProject = await _unitOfWork.Projects.GetByIdAsync(id);
-                if (existingProject != null && !string.IsNullOrEmpty(existingProject.ImageUrl))
+                if (!string.IsNullOrEmpty(existingProject.ImageUrl))
                 {
                     var oldFilePath = Path.Combine(_webHostEnvironment.WebRootPath, existingProject.ImageUrl.TrimStart('/'));
                     if (System.IO.File.Exists(oldFilePath))
@@ -128,11 +134,18 @@ public class ProjectsController : Controller
                     await imageFile.CopyToAsync(stream);
                 }
 
-                project.ImageUrl = "/images/projects/" + uniqueFileName;
+                existingProject.ImageUrl = "/images/projects/" + uniqueFileName;
             }
 
-            // Projeyi güncelle (resim yüklenmese bile diğer alanlar güncellenecek)
-            await _unitOfWork.Projects.UpdateAsync(project);
+            // Tracked entity'nin property'lerini güncelle (UpdateAsync kullanma, zaten tracked)
+            existingProject.Title = project.Title;
+            existingProject.Description = project.Description;
+            existingProject.Technologies = project.Technologies;
+            existingProject.GitHubUrl = project.GitHubUrl;
+            existingProject.LiveUrl = project.LiveUrl;
+            existingProject.IsFeatured = project.IsFeatured;
+
+            // Tracked entity'de değişiklik olduğu için sadece SaveChanges yeterli
             await _unitOfWork.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Project updated successfully!";

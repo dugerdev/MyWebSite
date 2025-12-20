@@ -1,4 +1,6 @@
-﻿<header class="py-5">
+﻿@model MyWebSite.Web.Models.HomeIndexViewModel
+
+<header class="py-5">
     <div class="container px-5 pb-5">
         <div class="row gx-5 align-items-center">
             <div class="col-xxl-5">
@@ -145,14 +147,100 @@
             <div class="col-xxl-8">
                 <div class="text-center my-5">
                     <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Me</span></h2>
-                    <p class="lead fw-light mb-4">My name is Start Bootstrap and I help brands grow.</p>
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit dolorum itaque qui unde quisquam consequatur autem. Eveniet quasi nobis aliquid cumque officiis sed rem iure ipsa! Praesentium ratione atque dolorem?</p>
-                    <div class="d-flex justify-content-center fs-2 gap-4">
-                        <a class="text-gradient" href="#!"><i class="bi bi-twitter"></i></a>
-                        <a class="text-gradient" href="#!"><i class="bi bi-linkedin"></i></a>
-                        <a class="text-gradient" href="#!"><i class="bi bi-github"></i></a>
-                    </div>
+                    @if (Model.AboutMe != null)
+                    {
+                        <p class="lead fw-light mb-4">@Model.AboutMe.ShortDescription</p>
+                        <p class="text-muted">@Model.AboutMe.FullDescription</p>
+                        <div class="d-flex justify-content-center fs-2 gap-4">
+                            @if (!string.IsNullOrEmpty(Model.AboutMe.TwitterUrl))
+                            {
+                                <a class="text-gradient" href="@Model.AboutMe.TwitterUrl" target="_blank"><i class="bi bi-twitter"></i></a>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AboutMe.LinkedInUrl))
+                            {
+                                <a class="text-gradient" href="@Model.AboutMe.LinkedInUrl" target="_blank"><i class="bi bi-linkedin"></i></a>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.AboutMe.GitHubUrl))
+                            {
+                                <a class="text-gradient" href="@Model.AboutMe.GitHubUrl" target="_blank"><i class="bi bi-github"></i></a>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">About information is not available at the moment.</p>
+                    }
                 </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section-->
+<section class="py-5">
+    <div class="container px-5 mb-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Featured Projects</span></h2>
+            <p class="lead fw-light text-muted">My featured projects</p>
+        </div>
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-11 col-xl-9 col-xxl-8">
+                @if (Model.FeaturedProjects != null && Model.FeaturedProjects.Any())
+                {
+                    @foreach (var project in Model.FeaturedProjects)
+                    {
+                        <!-- Featured Project Card -->
+                        <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
+                            <div class="card-body p-0">
+                                <div class="d-flex align-items-center">
+                                    <div class="p-5">
+                                        <h2 class="fw-bolder">
+                                            <a href="@Url.Action("Details", "Project", new { id = project.Id })" class="text-decoration-none text-dark">
+                                                @project.Title
+                                            </a>
+                                        </h2>
+                                        <p>@project.Description</p>
+                                        @if (!string.IsNullOrEmpty(project.Technologies))
+                                        {
+                                            <p class="text-muted"><strong>Technologies:</strong> @project.Technologies</p>
+                                        }
+                                        <div class="d-flex gap-2 mt-3">
+                                            <a class="btn btn-outline-dark" href="@Url.Action("Details", "Project", new { id = project.Id })">
+                                                <i class="bi bi-eye"></i> View Details
+                                            </a>
+                                            @if (!string.IsNullOrEmpty(project.GitHubUrl))
+                                            {
+                                                <a class="btn btn-outline-primary" href="@project.GitHubUrl" target="_blank">
+                                                    <i class="bi bi-github"></i> GitHub
+                                                </a>
+                                            }
+                                            @if (!string.IsNullOrEmpty(project.LiveUrl))
+                                            {
+                                                <a class="btn btn-primary" href="@project.LiveUrl" target="_blank">
+                                                    <i class="bi bi-box-arrow-up-right"></i> Live Demo
+                                                </a>
+                                            }
+                                        </div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(project.ImageUrl))
+                                    {
+                                        <img class="img-fluid" src="@project.ImageUrl" alt="@project.Title" style="max-width: 300px; max-height: 400px; object-fit: cover;" />
+                                    }
+                                    else
+                                    {
+                                        <img class="img-fluid" src="https://dummyimage.com/300x400/343a40/6c757d" alt="@project.Title" />
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center">
+                        <p class="text-muted">No featured projects available at the moment.</p>
+                    </div>
+                }
             </div>
         </div>
     </div>

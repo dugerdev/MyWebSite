@@ -15,6 +15,12 @@ public class UnitOfWork : IUnitOfWork
 
     public IGenericRepository<ContactMessage>? _contactMessages;
 
+    public IGenericRepository<ResumeItem>? _resumeItems;
+
+    public IGenericRepository<Skill>? _skills;
+
+    public IGenericRepository<AboutMe>? _aboutMe;
+
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
@@ -37,6 +43,33 @@ public class UnitOfWork : IUnitOfWork
             // Eğer _contactMessages null ise, yeni bir GenericRepository oluştur
             _contactMessages ??= new GenericRepository<ContactMessage>(_context);
             return _contactMessages;
+        }
+    }
+
+    public IGenericRepository<ResumeItem> ResumeItems
+    {
+        get
+        {
+            _resumeItems ??= new GenericRepository<ResumeItem>(_context);
+            return _resumeItems;
+        }
+    }
+
+    public IGenericRepository<Skill> Skills 
+    {
+        get
+        {
+            _skills ??= new GenericRepository<Skill>(_context);
+            return _skills;
+        }
+    }
+
+    public IGenericRepository<AboutMe> AboutMe
+    {
+        get
+        {
+            _aboutMe ??= new GenericRepository<AboutMe>(_context);
+            return _aboutMe;
         }
     }
 

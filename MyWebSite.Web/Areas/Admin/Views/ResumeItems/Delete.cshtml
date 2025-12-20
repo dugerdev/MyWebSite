@@ -1,0 +1,82 @@
+@model MyWebSite.Core.Entities.ResumeItem
+@using MyWebSite.Core.Enums
+
+@{
+    ViewData["Title"] = "Delete Resume Item";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Delete Resume Item</h1>
+    <a href="@Url.Action("Index", "ResumeItems", new { area = "Admin" })" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-danger">Are you sure you want to delete this resume item?</h6>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">
+                @if (Model.Type == ResumeItemType.Experience)
+                {
+                    <span class="badge badge-primary">Experience</span>
+                }
+                else
+                {
+                    <span class="badge badge-success">Education</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+
+            <dt class="col-sm-3">Company/Institution</dt>
+            <dd class="col-sm-9">@Model.CompanyOrInstitution</dd>
+
+            <dt class="col-sm-3">Location</dt>
+            <dd class="col-sm-9">@Model.Location</dd>
+
+            <dt class="col-sm-3">Period</dt>
+            <dd class="col-sm-9">
+                @if (Model.StartDate.HasValue)
+                {
+                    @Model.StartDate.Value.ToString("MMM yyyy")
+                }
+                else
+                {
+                    <text>-</text>
+                }
+                - 
+                @if (Model.EndDate.HasValue)
+                {
+                    @Model.EndDate.Value.ToString("MMM yyyy")
+                }
+                else
+                {
+                    <text>Present</text>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMMM yyyy")</dd>
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <a href="@Url.Action("Index", "ResumeItems", new { area = "Admin" })" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+

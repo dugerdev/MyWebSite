@@ -17,10 +17,36 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
 
     public DbSet<Project> Projects { get; set; }
     public DbSet<ContactMessage> ContactMessages { get; set; }
+    public DbSet<ResumeItem> ResumeItems { get; set; }
+    public DbSet<Skill> Skills { get; set; }
+    public DbSet<AboutMe> AboutMe { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<ResumeItem>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.CompanyOrInstitution).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Location).HasMaxLength(200); // Nullable (IsRequired çağrılmadığı için otomatik nullable)
+            // StartDate ve EndDate nullable (DateTime? olduğu için IsRequired çağrılmadığında otomatik nullable)
+            entity.Property(e => e.Description).IsRequired(); // MaxLength kaldırıldı, daha uzun açıklamalar için
+            entity.Property(e => e.DisplayOrder).IsRequired();
+
+            entity.Property(e => e.Type).HasConversion<int>();
+        });
+
+        modelBuilder.Entity<Skill>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.Category).IsRequired();
+            entity.Property(e => e.DisplayOrder).IsRequired();
+
+            entity.Property(e => e.Category).HasConversion<int>();
+        });
 
         modelBuilder.Entity<Project>(entity =>
         {
@@ -43,7 +69,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             entity.Property(e => e.CreatedAt).IsRequired();
         });
 
+        modelBuilder.Entity<AboutMe>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
+            entity.Property(e => e.ShortDescription).IsRequired().HasMaxLength(500);
+            entity.Property(e => e.FullDescription).IsRequired();
+            entity.Property(e => e.TwitterUrl).HasMaxLength(500);
+            entity.Property(e => e.LinkedInUrl).HasMaxLength(500);
+            entity.Property(e => e.GitHubUrl).HasMaxLength(500);
+        });
+
         modelBuilder.Entity<Project>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ContactMessage>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<ResumeItem>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<Skill>().HasQueryFilter(e => !e.IsDeleted);
+        modelBuilder.Entity<AboutMe>().HasQueryFilter(e => !e.IsDeleted);
     }
 }

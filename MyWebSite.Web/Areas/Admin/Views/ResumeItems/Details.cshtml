@@ -1,0 +1,89 @@
+@model MyWebSite.Core.Entities.ResumeItem
+@using MyWebSite.Core.Enums
+
+@{
+    ViewData["Title"] = "Resume Item Details";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Resume Item Details</h1>
+    <a href="@Url.Action("Index", "ResumeItems", new { area = "Admin" })" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Type</dt>
+            <dd class="col-sm-9">
+                @if (Model.Type == ResumeItemType.Experience)
+                {
+                    <span class="badge badge-primary">Experience</span>
+                }
+                else
+                {
+                    <span class="badge badge-success">Education</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Title</dt>
+            <dd class="col-sm-9">@Model.Title</dd>
+
+            <dt class="col-sm-3">Company/Institution</dt>
+            <dd class="col-sm-9">@Model.CompanyOrInstitution</dd>
+
+            <dt class="col-sm-3">Location</dt>
+            <dd class="col-sm-9">@Model.Location</dd>
+
+            <dt class="col-sm-3">Start Date</dt>
+            <dd class="col-sm-9">
+                @if (Model.StartDate.HasValue)
+                {
+                    @Model.StartDate.Value.ToString("dd MMMM yyyy")
+                }
+                else
+                {
+                    <span class="text-muted">N/A</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">End Date</dt>
+            <dd class="col-sm-9">
+                @if (Model.EndDate.HasValue)
+                {
+                    @Model.EndDate.Value.ToString("dd MMMM yyyy")
+                }
+                else
+                {
+                    <span class="text-muted">Present</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Description</dt>
+            <dd class="col-sm-9">@Model.Description</dd>
+
+            <dt class="col-sm-3">Display Order</dt>
+            <dd class="col-sm-9">@Model.DisplayOrder</dd>
+
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMMM yyyy HH:mm")</dd>
+
+            @if (Model.UpdatedDate.HasValue)
+            {
+                <dt class="col-sm-3">Updated Date</dt>
+                <dd class="col-sm-9">@Model.UpdatedDate.Value.ToString("dd MMMM yyyy HH:mm")</dd>
+            }
+        </dl>
+
+        <div class="mt-4">
+            <a href="@Url.Action("Edit", "ResumeItems", new { area = "Admin", id = Model.Id })" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Edit
+            </a>
+            <a href="@Url.Action("Delete", "ResumeItems", new { area = "Admin", id = Model.Id })" class="btn btn-danger">
+                <i class="fas fa-trash"></i> Delete
+            </a>
+        </div>
+    </div>
+</div>
+

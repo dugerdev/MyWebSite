@@ -1,6 +1,94 @@
 ﻿@{
     ViewData["Title"] = "Privacy Policy";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<!-- Privacy Policy Section -->
+<section class="py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-10 col-xl-8">
+                <div class="text-center mb-5">
+                    <h1 class="display-5 fw-bolder mb-0"><span class="text-gradient d-inline">Privacy Policy</span></h1>
+                    <p class="lead fw-light text-muted mt-3">Our Commitment to Your Privacy</p>
+                    <p class="text-muted small">Last Updated: @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+                </div>
+
+                <div class="card shadow border-0 rounded-4">
+                    <div class="card-body p-5">
+                        <h2 class="fw-bolder mb-4">1. Privacy Commitment</h2>
+                        <p class="text-muted mb-4">
+                            This website places great importance on protecting the privacy of our visitors. 
+                            This privacy policy explains how information collected on our website is used and protected.
+                        </p>
+
+                        <h2 class="fw-bolder mb-4">2. Information Collected</h2>
+                        <p class="text-muted mb-3">Our website may collect the following information:</p>
+                        <ul class="text-muted mb-4">
+                            <li><strong>Contact Form:</strong> Name, email address, and message content</li>
+                            <li><strong>Automatically Collected Information:</strong> IP address, browser type, operating system</li>
+                            <li><strong>Cookies:</strong> Used to improve site experience</li>
+                        </ul>
+
+                        <h2 class="fw-bolder mb-4">3. Use of Information</h2>
+                        <p class="text-muted mb-3">Collected information is used for the following purposes:</p>
+                        <ul class="text-muted mb-4">
+                            <li>To respond to your contact requests</li>
+                            <li>To improve website functionality</li>
+                            <li>To fulfill legal obligations</li>
+                        </ul>
+
+                        <h2 class="fw-bolder mb-4">4. Information Protection</h2>
+                        <p class="text-muted mb-4">
+                            Your personal information is stored in secure databases and protected against unauthorized access. 
+                            Industry-standard security measures are used to protect your data.
+                        </p>
+
+                        <h2 class="fw-bolder mb-4">5. Information Sharing</h2>
+                        <p class="text-muted mb-4">
+                            Your personal information is not shared with third parties, except for legal obligations. 
+                            Sharing may occur only in the following circumstances:
+                        </p>
+                        <ul class="text-muted mb-4">
+                            <li>When required by a legal obligation</li>
+                            <li>When necessary to protect our rights</li>
+                            <li>In the event of the sale or merger of our business</li>
+                        </ul>
+
+                        <h2 class="fw-bolder mb-4">6. Cookies</h2>
+                        <p class="text-muted mb-4">
+                            Our website uses cookies to improve user experience. 
+                            You can disable cookies from your browser settings, but some features of the site may not work properly in this case.
+                        </p>
+
+                        <h2 class="fw-bolder mb-4">7. Your Rights</h2>
+                        <p class="text-muted mb-3">You have the following rights regarding your personal data:</p>
+                        <ul class="text-muted mb-4">
+                            <li>Right to access your data</li>
+                            <li>Right to request correction of your data</li>
+                            <li>Right to request deletion of your data</li>
+                            <li>Right to object to data processing</li>
+                        </ul>
+
+                        <h2 class="fw-bolder mb-4">8. Contact</h2>
+                        <p class="text-muted mb-4">
+                            If you have any questions about our privacy policy or wish to make a request regarding your personal data, 
+                            please <a href="@Url.Action("Index", "Contact")" class="text-primary">contact us</a> through our contact page.
+                        </p>
+
+                        <h2 class="fw-bolder mb-4">9. Changes</h2>
+                        <p class="text-muted mb-4">
+                            This privacy policy may be updated due to legal requirements or business needs. 
+                            Important changes will be announced on the website.
+                        </p>
+
+                        <div class="text-center mt-5">
+                            <a class="btn btn-primary btn-lg px-4" href="@Url.Action("Index", "Home")">
+                                <i class="bi bi-house-door"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

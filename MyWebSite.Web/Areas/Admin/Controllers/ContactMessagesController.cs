@@ -35,10 +35,10 @@ public class ContactMessagesController : Controller
         }
 
         // Mesajı okundu olarak işaretle (eğer okunmamışsa)
+        // Entity zaten tracked olduğu için sadece property değiştirip SaveChanges yeterli
         if (!message.IsRead)
         {
             message.IsRead = true;
-            await _unitOfWork.ContactMessages.UpdateAsync(message);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -56,8 +56,8 @@ public class ContactMessagesController : Controller
             return NotFound();
         }
 
+        // Entity zaten tracked olduğu için sadece property değiştirip SaveChanges yeterli
         message.IsRead = true;
-        await _unitOfWork.ContactMessages.UpdateAsync(message);
         await _unitOfWork.SaveChangesAsync();
 
         TempData["SuccessMessage"] = "Message marked as read.";

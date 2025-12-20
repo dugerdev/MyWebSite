@@ -32,7 +32,7 @@ public class ContactController : Controller
 
         await _unitOfWork.SaveChangesAsync();
 
-        TempData["SuccessMessage"] = "Mesajınız başarıyla gönderildi. En kısa sürede size geri dönüş yapacağız";
+        TempData["SuccessMessage"] = "Your message has been sent successfully. We will get back to you as soon as possible.";
 
         return RedirectToAction("Index");
     }

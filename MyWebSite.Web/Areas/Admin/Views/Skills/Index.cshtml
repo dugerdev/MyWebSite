@@ -1,0 +1,82 @@
+@model IEnumerable<MyWebSite.Core.Entities.Skill>
+@using MyWebSite.Core.Enums
+
+@{
+    ViewData["Title"] = "Skills";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Skills</h1>
+    <a href="@Url.Action("Create", "Skills", new { area = "Admin" })" class="btn btn-primary btn-sm">
+        <i class="fas fa-plus"></i> Create New Skill
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Name</th>
+                        <th>Display Order</th>
+                        <th>Created At</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var skill in Model)
+                        {
+                        <tr>
+                            <td>
+                                @if (skill.Category == SkillCategory.ProfessionalSkills)
+                                {
+                                    <span class="badge badge-primary">Professional Skills</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success">Languages</span>
+                                }
+                            </td>
+                            <td>@skill.Name</td>
+                            <td>@skill.DisplayOrder</td>
+                            <td>@skill.CreatedAt.ToString("dd MMM yyyy")</td>
+                            <td>
+                                <a href="@Url.Action("Details", "Skills", new { area = "Admin", id = skill.Id })" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="@Url.Action("Edit", "Skills", new { area = "Admin", id = skill.Id })" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="@Url.Action("Delete", "Skills", new { area = "Admin", id = skill.Id })" class="btn btn-danger btn-sm">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">No skills found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

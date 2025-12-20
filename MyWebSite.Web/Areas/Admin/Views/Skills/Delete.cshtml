@@ -1,0 +1,55 @@
+@model MyWebSite.Core.Entities.Skill
+@using MyWebSite.Core.Enums
+
+@{
+    ViewData["Title"] = "Delete Skill";
+}
+
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Delete Skill</h1>
+    <a href="@Url.Action("Index", "Skills", new { area = "Admin" })" class="btn btn-secondary btn-sm">
+        <i class="fas fa-arrow-left"></i> Back to List
+    </a>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-danger">Are you sure you want to delete this skill?</h6>
+    </div>
+    <div class="card-body">
+        <dl class="row">
+            <dt class="col-sm-3">Category</dt>
+            <dd class="col-sm-9">
+                @if (Model.Category == SkillCategory.ProfessionalSkills)
+                {
+                    <span class="badge badge-primary">Professional Skills</span>
+                }
+                else
+                {
+                    <span class="badge badge-success">Languages</span>
+                }
+            </dd>
+
+            <dt class="col-sm-3">Name</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Created At</dt>
+            <dd class="col-sm-9">@Model.CreatedAt.ToString("dd MMMM yyyy")</dd>
+        </dl>
+
+        <form asp-action="Delete" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id" />
+            
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <a href="@Url.Action("Index", "Skills", new { area = "Admin" })" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
