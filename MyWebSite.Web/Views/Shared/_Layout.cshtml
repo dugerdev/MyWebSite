@@ -3,11 +3,27 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Muhammed Duger</title>
-    <!-- Favicon-->
+    <meta name="description" content="@(ViewData["Description"] ?? "Muhammed Duger - Full Stack Developer | Portfolio & Projects | dugerdev.com")" />
+    <meta name="author" content="Muhammed Duger" />
+    <title>@(ViewData["Title"] != null ? $"{ViewData["Title"]} - Muhammed Duger" : "Muhammed Duger - Full Stack Developer")</title>
+    
+    <!-- Favicon & App Icons -->
+    <!-- SVG Favicon: Modern tarayıcılar için yüksek kalite, ölçeklenebilir -->
+    <link rel="icon" type="image/svg+xml" href="~/assets/favicon.svg" />
+    <!-- Fallback: Eski tarayıcılar için -->
     <link rel="icon" type="image/x-icon" href="~/assets/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="96x96" href="~/assets/favicon-96x96.png" />
+    
+    <!-- Apple Touch Icon (iOS) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/assets/apple-touch-icon.png" />
+    
+    <!-- Android Chrome Icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="~/assets/web-app-manifest-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="~/assets/web-app-manifest-512x512.png" />
+    
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="~/assets/site.webmanifest" />
+    
     <!-- Custom Google font-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -36,21 +52,21 @@
         </nav>
        <!--Navigation End Here -->
 
-       @RenderBody()
+            @RenderBody()
 
         <!-- Footer-->
         <footer class="bg-white py-4 mt-auto">
             <div class="container px-5">
                 <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                    <div class="col-auto"><div class="small m-0">Copyright &copy; Your Website 2023</div></div>
+                    <div class="col-auto"><div class="small m-0">Copyright &copy; @DateTime.Now.Year dugerdev.com - Muhammed Duger</div></div>
                     <div class="col-auto">
                         <a class="small" href="@Url.Action("Privacy", "Home")">Privacy</a>
                         <span class="mx-1">&middot;</span>
                         <a class="small" href="@Url.Action("Index", "Contact")">Contact</a>
                     </div>
-                </div>
-            </div>
-        </footer>
+    </div>
+        </div>
+    </footer>
     </main>
     
     <!-- Bootstrap core JS-->

@@ -21,9 +21,7 @@
 
             <div class="form-group">
                 <label asp-for="Type" class="control-label"></label>
-                <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<ResumeItemType>()">
-                    <option value="">-- Select Type --</option>
-                </select>
+                <select asp-for="Type" class="form-control" asp-items="Html.GetEnumSelectList<ResumeItemType>()"></select>
                 <span asp-validation-for="Type" class="text-danger"></span>
             </div>
 

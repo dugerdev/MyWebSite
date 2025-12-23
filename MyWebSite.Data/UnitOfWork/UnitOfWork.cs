@@ -40,7 +40,7 @@ public class UnitOfWork : IUnitOfWork
     {
         get
         {
-            // Eğer _contactMessages null ise, yeni bir GenericRepository oluştur
+            // Lazy initialization: İlk erişimde repository oluşturulur
             _contactMessages ??= new GenericRepository<ContactMessage>(_context);
             return _contactMessages;
         }

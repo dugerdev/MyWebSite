@@ -111,3 +111,7 @@ Thumbs.db
 
 ## Template folders (sadece referans için, kullanılmıyor)
 startbootstrap-*/
+
+## Production Configuration (güvenlik için git'e eklenmemeli)
+appsettings.Production.json
+*.Production.json

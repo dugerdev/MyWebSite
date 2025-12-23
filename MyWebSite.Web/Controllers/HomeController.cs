@@ -15,17 +15,12 @@ namespace MyWebSite.Web.Controllers
             _logger = logger;
         }
 
-        public IActionResult Test404()
-        {
-            Response.StatusCode = 404;
-            return NotFound();
-        }
-
         public async Task<IActionResult> Index()
         {
+            // Ana sayfada gösterilecek öne çıkan projeleri al
             var featuredProjects = await _unitOfWork.Projects.FindAsync(p => p.IsFeatured == true);
             
-            // AboutMe bilgisini al (ilk aktif kaydı al)
+            // AboutMe bilgisi (tek bir kayıt olmalı - singleton)
             var aboutMe = (await _unitOfWork.AboutMe.GetAllAsync()).FirstOrDefault();
 
             var viewModel = new HomeIndexViewModel
@@ -60,6 +55,7 @@ namespace MyWebSite.Web.Controllers
 
             string message = statusCode switch
             {
+                400 => "Bad Request. Please check your input and try again.",
                 404 => "The page you were looking for was not found.",
                 403 => "You do not have permission to access this page.",
                 500 => "A server error occurred.",
@@ -74,9 +70,6 @@ namespace MyWebSite.Web.Controllers
             return View();
         }
 
-        /// <summary>
-        /// Privacy Policy sayfasını gösterir.
-        /// </summary>
         public IActionResult Privacy()
         {
             return View();

@@ -11732,3 +11732,200 @@ html {
     left: -2vw;
   }
 }
+
+/* ========================================
+   Card Animations - Tüm kartlara hareketli efekt
+   ======================================== */
+
+/* Ana kartlar: Project, Resume, About Me kartları */
+.card.shadow.rounded-4,
+.card.overflow-hidden.shadow.rounded-4 {
+  transition: all 0.3s ease-in-out;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* Kart hover efekti: Yukarı kalkma ve shadow artışı */
+.card.shadow.rounded-4:hover,
+.card.overflow-hidden.shadow.rounded-4:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.15) !important;
+}
+
+/* İç kartlar: Skill kartları, Experience/Education iç kartları */
+.bg-light.rounded-4 {
+  transition: all 0.3s ease-in-out;
+}
+
+.bg-light.rounded-4:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa !important;
+}
+
+/* Feature icon kartları (Resume Skills bölümündeki iconlar) */
+.feature {
+  transition: all 0.3s ease-in-out;
+}
+
+.feature:hover {
+  transform: scale(1.1) rotate(5deg);
+}
+
+/* Sayfa yüklenirken kartların fade-in animasyonu */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Smooth scroll için */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobilde animasyonları hafiflet (performans için) */
+@media (prefers-reduced-motion: reduce) {
+  .card.shadow.rounded-4,
+  .card.overflow-hidden.shadow.rounded-4,
+  .bg-light.rounded-4,
+  .feature {
+    animation: none;
+    transition: none;
+  }
+  
+  .card.shadow.rounded-4:hover,
+  .card.overflow-hidden.shadow.rounded-4:hover,
+  .bg-light.rounded-4:hover,
+  .feature:hover {
+    transform: none;
+  }
+}
+
+
+/* ========================================
+   Navbar & Footer Improvements
+   ======================================== */
+
+/* Navbar Sticky Shadow Effect - Scroll'da shadow eklenir */
+.navbar {
+  transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.navbar.scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navbar Brand Hover Effect */
+.navbar-brand {
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.navbar-brand span {
+  background: linear-gradient(135deg, #1e30f3 0%, #e21e80 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Nav Link Hover Effects */
+.navbar-nav .nav-link {
+  position: relative;
+  transition: color 0.3s ease-in-out;
+  padding: 0.5rem 1rem !important;
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(135deg, #1e30f3 0%, #e21e80 100%);
+  transition: all 0.3s ease-in-out;
+  transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 80%;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #1e30f3 !important;
+}
+
+/* Navbar Toggler Animation */
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+  transition: all 0.3s ease-in-out;
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 0.25rem rgba(30, 48, 243, 0.25);
+}
+
+.navbar-toggler:hover {
+  transform: scale(1.1);
+}
+
+/* Footer Improvements */
+footer {
+  border-top: 1px solid #e9ecef;
+  transition: all 0.3s ease-in-out;
+}
+
+footer a {
+  color: #6c757d;
+  text-decoration: none;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+footer a:hover {
+  color: #1e30f3;
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+}
+
+footer .small {
+  transition: color 0.3s ease-in-out;
+}
+
+/* Footer Link Separator Animation */
+footer span.mx-1 {
+  transition: opacity 0.3s ease-in-out;
+}
+
+footer:hover span.mx-1 {
+  opacity: 0.7;
+}
+
+/* Responsive Navbar Adjustments */
+@media (max-width: 991.98px) {
+  .navbar-nav .nav-link::after {
+    display: none;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+  }
+}
+

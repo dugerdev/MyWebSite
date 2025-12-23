@@ -30,11 +30,12 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             entity.HasKey(e => e.Id);
             entity.Property(e => e.Title).IsRequired().HasMaxLength(200);
             entity.Property(e => e.CompanyOrInstitution).IsRequired().HasMaxLength(200);
-            entity.Property(e => e.Location).HasMaxLength(200); // Nullable (IsRequired çağrılmadığı için otomatik nullable)
-            // StartDate ve EndDate nullable (DateTime? olduğu için IsRequired çağrılmadığında otomatik nullable)
-            entity.Property(e => e.Description).IsRequired(); // MaxLength kaldırıldı, daha uzun açıklamalar için
+            entity.Property(e => e.Location).HasMaxLength(200); // Nullable (DateTime? olduğu için)
+            // StartDate ve EndDate nullable: Henüz başlamamış veya devam eden pozisyonlar için
+            entity.Property(e => e.Description).IsRequired(); // MaxLength yok: Uzun açıklamalara izin verilir
             entity.Property(e => e.DisplayOrder).IsRequired();
 
+            // Enum'u veritabanında int olarak sakla
             entity.Property(e => e.Type).HasConversion<int>();
         });
 
@@ -45,6 +46,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             entity.Property(e => e.Category).IsRequired();
             entity.Property(e => e.DisplayOrder).IsRequired();
 
+            // Enum'u veritabanında int olarak sakla
             entity.Property(e => e.Category).HasConversion<int>();
         });
 
@@ -80,6 +82,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityR
             entity.Property(e => e.GitHubUrl).HasMaxLength(500);
         });
 
+        // Global query filter: Tüm sorgularda IsDeleted=false olan kayıtlar otomatik filtrelenir
+        // Bu sayede soft delete yapılan kayıtlar sorgu sonuçlarına dahil edilmez
         modelBuilder.Entity<Project>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ContactMessage>().HasQueryFilter(e => !e.IsDeleted);
         modelBuilder.Entity<ResumeItem>().HasQueryFilter(e => !e.IsDeleted);

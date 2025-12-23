@@ -20,23 +20,9 @@
                 <div class="card overflow-hidden shadow rounded-4 border-0 mb-5">
                     <div class="card-body p-0">
                         <div class="row g-0">
-                            <!-- Project Image (Left/Full Width on Mobile) -->
-                            @if (!string.IsNullOrEmpty(Model.ImageUrl))
-                            {
-                                <div class="col-md-6 col-lg-5">
-                                    <img class="img-fluid w-100 h-100" src="@Model.ImageUrl" alt="@Model.Title" style="object-fit: cover; min-height: 400px;" />
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-6 col-lg-5">
-                                    <img class="img-fluid w-100 h-100" src="https://dummyimage.com/600x800/343a40/6c757d" alt="@Model.Title" style="object-fit: cover; min-height: 400px;" />
-                                </div>
-                            }
-
-                            <!-- Project Info (Right/Full Width on Mobile) -->
-                            <div class="col-md-6 col-lg-7">
-                                <div class="p-5">
+                            <!-- Project Info (Left) -->
+                            <div class="col-lg-6">
+                                <div class="p-5 h-100 d-flex flex-column">
                                     <h1 class="display-5 fw-bolder mb-4">@Model.Title</h1>
 
                                     <p class="lead mb-4">@Model.Description</p>
@@ -50,7 +36,7 @@
                                     }
 
                                     <!-- Action Buttons -->
-                                    <div class="d-flex gap-2 flex-wrap mt-4">
+                                    <div class="d-flex gap-2 flex-wrap mt-auto">
                                         @if (!string.IsNullOrEmpty(Model.GitHubUrl))
                                         {
                                             <a class="btn btn-outline-primary btn-lg" href="@Model.GitHubUrl" target="_blank" rel="noopener noreferrer">
@@ -68,18 +54,34 @@
                                     <!-- Project Metadata -->
                                     <div class="mt-4 pt-4 border-top">
                                         <div class="row text-muted small">
-                                            <div class="col-6">
+                                            <div class="col-12 mb-2">
                                                 <strong>Created:</strong> @Model.CreatedAt.ToString("MMMM dd, yyyy")
                                             </div>
                                             @if (Model.UpdatedDate.HasValue)
                                             {
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <strong>Updated:</strong> @Model.UpdatedDate.Value.ToString("MMMM dd, yyyy")
                                                 </div>
                                             }
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <!-- Project Image (Right) -->
+                            <div class="col-lg-6">
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <div class="h-100 d-flex align-items-center justify-content-center" style="min-height: 500px; background-color: #f8f9fa;">
+                                        <img class="img-fluid" src="@Model.ImageUrl" alt="@Model.Title" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="h-100" style="min-height: 500px;">
+                                        <img class="img-fluid w-100 h-100" src="https://dummyimage.com/800x600/343a40/6c757d" alt="@Model.Title" style="object-fit: cover;" />
+                                    </div>
+                                }
                             </div>
                         </div>
                     </div>
