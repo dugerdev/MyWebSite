@@ -133,11 +133,11 @@
 
                                 @if (Model.ProfessionalSkills != null && Model.ProfessionalSkills.Any())
                                 {
-                                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                                    <div class="row row-cols-1 row-cols-md-3">
                                         @foreach (var skill in Model.ProfessionalSkills)
                                         {
-                                            <div class="col">
-                                                <div class="d-flex align-items-center bg-light rounded-4 p-4 h-100">@skill.Name</div>
+                                            <div class="col mb-4 mb-md-0">
+                                                <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">@skill.Name</div>
                                             </div>
                                         }
                                     </div>
@@ -159,11 +159,11 @@
 
                                 @if (Model.Languages != null && Model.Languages.Any())
                                 {
-                                    <div class="row row-cols-1 row-cols-md-3 g-4">
+                                    <div class="row row-cols-1 row-cols-md-3">
                                         @foreach (var language in Model.Languages)
                                         {
-                                            <div class="col">
-                                                <div class="d-flex align-items-center bg-light rounded-4 p-4 h-100">@language.Name</div>
+                                            <div class="col mb-4 mb-md-0">
+                                                <div class="d-flex align-items-center bg-light rounded-4 p-3 h-100">@language.Name</div>
                                             </div>
                                         }
                                     </div>

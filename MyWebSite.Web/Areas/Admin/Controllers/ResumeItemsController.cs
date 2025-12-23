@@ -77,16 +77,14 @@ public class ResumeItemsController : Controller
 
         if (ModelState.IsValid)
         {
-            // Entity Framework tracking: Mevcut entity'yi veritabanından al (tracked olur)
-            // UpdateAsync kullanmak yerine tracked entity'nin property'lerini güncelliyoruz
-            // Bu sayede "entity already tracked" hatası almayız
+            // Tracked entity'yi al
             var existingResumeItem = await _unitOfWork.ResumeItems.GetByIdAsync(id);
             if (existingResumeItem == null)
             {
                 return NotFound();
             }
 
-            // Tracked entity'nin property'lerini güncelle
+            // Tracked entity'nin property'lerini güncelle (UpdateAsync kullanma, zaten tracked)
             existingResumeItem.Title = resumeItem.Title;
             existingResumeItem.CompanyOrInstitution = resumeItem.CompanyOrInstitution;
             existingResumeItem.Location = resumeItem.Location;
@@ -96,7 +94,7 @@ public class ResumeItemsController : Controller
             existingResumeItem.Type = resumeItem.Type;
             existingResumeItem.DisplayOrder = resumeItem.DisplayOrder;
 
-            // Değişiklikler tracked entity üzerinde yapıldığı için sadece SaveChanges yeterli
+            // Tracked entity'de değişiklik olduğu için sadece SaveChanges yeterli
             await _unitOfWork.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Resume item updated successfully!";
@@ -126,7 +124,6 @@ public class ResumeItemsController : Controller
             return NotFound();
         }
 
-        // Soft delete: Veritabanından fiziksel olarak silmez, sadece IsDeleted=true yapar
         await _unitOfWork.ResumeItems.DeleteAsync(id);
         await _unitOfWork.SaveChangesAsync();
 
@@ -134,3 +131,4 @@ public class ResumeItemsController : Controller
         return RedirectToAction(nameof(Index));
     }
 }
+

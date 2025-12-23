@@ -112,6 +112,9 @@ Thumbs.db
 ## Template folders (sadece referans için, kullanılmıyor)
 startbootstrap-*/
 
-## Production Configuration (güvenlik için git'e eklenmemeli)
-appsettings.Production.json
-*.Production.json
+## Documentation & Checklist files (geliştirme sırasında kullanılan, repo'ya eklenmesine gerek olmayan dosyalar)
+PRODUCTION_CHECKLIST.md
+DEPLOYMENT.md
+*_CHECKLIST.md
+*_REHBERI.md
+FAVICON_OLUSTURMA_REHBERI.md

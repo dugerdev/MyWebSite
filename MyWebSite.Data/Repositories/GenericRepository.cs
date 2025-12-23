@@ -47,48 +47,50 @@ public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
         return await _dbSet.FindAsync(id);
     }
 
-    // Yeni bir kayıt ekler
-    // Id ve CreatedAt otomatik olarak set edilir
+    // AddAsync: Yeni bir kayıt ekler
     public virtual async Task<T> AddAsync(T entity)
     {
-        // Id boşsa yeni Guid oluştur (kullanıcı belirtmemişse)
+        // Guid Id boşsa (Guid.Empty), yeni bir Guid oluştur
         if (entity.Id == Guid.Empty)
         {
             entity.Id = Guid.NewGuid();
         }
         
-        // Oluşturulma tarihini otomatik set et
+        // CreatedAt'i otomatik olarak şu anki zamanı yapıyoruz
         entity.CreatedAt = DateTime.Now;
         
+        // AddAsync: Entity'yi DbSet'e ekler
         await _dbSet.AddAsync(entity);
         
         return entity;
     }
 
-    // Mevcut bir kaydı günceller
-    // UpdatedDate otomatik olarak set edilir
-    // NOT: Bu metod genellikle kullanılmaz, çünkü tracked entity üzerinde direkt değişiklik yapılır
+    // UpdateAsync: Mevcut bir kaydı günceller
     public virtual Task UpdateAsync(T entity)
     {
+        // UpdatedDate'i otomatik olarak şu anki zamanı yapıyoruz
         entity.UpdatedDate = DateTime.Now;
+        
+        // Update: Entity'yi güncellenmiş olarak işaretler
         _dbSet.Update(entity);
         
         return Task.CompletedTask;
     }
 
-    // Soft delete: Fiziksel olarak silmez, sadece IsDeleted=true yapar
-    // Bu sayede veri geri kurtarılabilir ve referans bütünlüğü korunur
+    // DeleteAsync: Soft delete yapar (IsDeleted=true yapar)
     public virtual async Task DeleteAsync(Guid id)
     {
+        // Önce kaydı buluyoruz
         var entity = await GetByIdAsync(id);
         
         if (entity != null)
         {
+            // Soft delete: IsDeleted=true yapıyoruz
             entity.IsDeleted = true;
             entity.UpdatedDate = DateTime.Now;
             
-            // UpdateAsync kullanmak yerine direkt değişiklik yapıyoruz
-            // Çünkü entity zaten tracked (GetByIdAsync ile alındığı için)
+            // UpdateAsync ile güncelliyoruz
+            await UpdateAsync(entity);
         }
     }
 

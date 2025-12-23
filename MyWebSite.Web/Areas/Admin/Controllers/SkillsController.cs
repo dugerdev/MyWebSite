@@ -76,20 +76,19 @@ public class SkillsController : Controller
 
         if (ModelState.IsValid)
         {
-            // Entity Framework tracking: Mevcut entity'yi veritabanından al (tracked olur)
-            // UpdateAsync kullanmak yerine tracked entity'nin property'lerini güncelliyoruz
+            // Tracked entity'yi al
             var existingSkill = await _unitOfWork.Skills.GetByIdAsync(id);
             if (existingSkill == null)
             {
                 return NotFound();
             }
 
-            // Tracked entity'nin property'lerini güncelle
+            // Tracked entity'nin property'lerini güncelle (UpdateAsync kullanma, zaten tracked)
             existingSkill.Name = skill.Name;
             existingSkill.Category = skill.Category;
             existingSkill.DisplayOrder = skill.DisplayOrder;
 
-            // Değişiklikler tracked entity üzerinde yapıldığı için sadece SaveChanges yeterli
+            // Tracked entity'de değişiklik olduğu için sadece SaveChanges yeterli
             await _unitOfWork.SaveChangesAsync();
 
             TempData["SuccessMessage"] = "Skill updated successfully!";
@@ -109,6 +108,7 @@ public class SkillsController : Controller
         return View(skill);
     }
 
+    // POST: Delete skill
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(Guid id)
@@ -119,7 +119,7 @@ public class SkillsController : Controller
             return NotFound();
         }
 
-        // Soft delete: Veritabanından fiziksel olarak silmez, sadece IsDeleted=true yapar
+        // Soft delete (IsDeleted = true)
         await _unitOfWork.Skills.DeleteAsync(id);
         await _unitOfWork.SaveChangesAsync();
 
